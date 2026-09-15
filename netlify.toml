@@ -1,0 +1,12 @@
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+# Official Netlify adapter for Next.js — runs SSR, route handlers,
+# middleware and next/image on Netlify's edge/functions automatically.
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+[build.environment]
+  # Netlify defaults to an older Node; pin to 20 LTS for Next.js 15.
+  NODE_VERSION = "20"
