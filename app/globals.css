@@ -1,0 +1,201 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+  Royalty Studio design system
+  Palette: warm black (ink), white / cream, and a confident amber-orange accent.
+  Colours are declared as HSL channels so Tailwind tokens can compose opacity.
+*/
+@layer base {
+  :root {
+    --background: 40 33% 99%;
+    --foreground: 24 12% 10%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 24 12% 10%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 24 12% 10%;
+
+    --primary: 22 92% 52%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 30 20% 96%;
+    --secondary-foreground: 24 12% 12%;
+
+    --muted: 30 16% 95%;
+    --muted-foreground: 24 6% 42%;
+
+    --accent: 30 30% 94%;
+    --accent-foreground: 24 12% 12%;
+
+    --destructive: 0 72% 48%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 30 12% 88%;
+    --input: 30 12% 86%;
+    --ring: 22 92% 52%;
+
+    --ink: 24 14% 8%;
+    --cream: 38 44% 96%;
+
+    --radius: 0.6rem;
+
+    /* Self-hosted font families (see @fontsource imports in app/layout.tsx). */
+    --font-sans: "Inter Variable";
+    --font-serif: "Playfair Display Variable";
+    --font-display: "Archivo Variable";
+  }
+
+  /* The admin surface and dark hero regions opt into this palette. */
+  .dark {
+    --background: 24 14% 7%;
+    --foreground: 40 20% 96%;
+
+    --card: 24 12% 10%;
+    --card-foreground: 40 20% 96%;
+
+    --popover: 24 12% 10%;
+    --popover-foreground: 40 20% 96%;
+
+    --primary: 22 92% 55%;
+    --primary-foreground: 24 14% 8%;
+
+    --secondary: 24 8% 16%;
+    --secondary-foreground: 40 20% 96%;
+
+    --muted: 24 8% 15%;
+    --muted-foreground: 30 8% 64%;
+
+    --accent: 24 8% 18%;
+    --accent-foreground: 40 20% 96%;
+
+    --destructive: 0 62% 46%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 24 8% 20%;
+    --input: 24 8% 22%;
+    --ring: 22 92% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    scroll-behavior: smooth;
+    /* Prevent iOS/Android auto-inflating text on rotation. */
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    text-rendering: optimizeLegibility;
+    /* Safety net: no accidental horizontal scrolling on any device.
+       `clip` (not `hidden`) avoids turning body into a scroll container,
+       so it never breaks position: sticky. */
+    overflow-x: clip;
+  }
+  /* Media never forces the layout wider than the screen. */
+  img,
+  video,
+  canvas,
+  svg {
+    max-width: 100%;
+  }
+  /* Respect device safe areas (notches) for fixed edge elements. */
+  @supports (padding: max(0px)) {
+    body {
+      padding-left: env(safe-area-inset-left);
+      padding-right: env(safe-area-inset-right);
+    }
+  }
+  ::selection {
+    @apply bg-primary/20 text-foreground;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display), system-ui, sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+}
+
+@layer components {
+  .container-tight {
+    @apply mx-auto w-full max-w-5xl px-5;
+  }
+  .eyebrow {
+    @apply text-xs font-medium uppercase tracking-[0.28em] text-primary;
+  }
+  .link-underline {
+    @apply relative after:absolute after:-bottom-0.5 after:left-0 after:h-px after:w-0 after:bg-primary after:transition-all after:duration-300 hover:after:w-full;
+  }
+  /* Oversized editorial display type for hero statements */
+  .mega {
+    font-family: var(--font-display), system-ui, sans-serif;
+    font-weight: 800;
+    text-transform: uppercase;
+    line-height: 0.86;
+    letter-spacing: -0.03em;
+  }
+  .label-stack {
+    font-family: var(--font-display), system-ui, sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    line-height: 1.35;
+    font-size: 12px;
+  }
+  /* Skeleton shimmer */
+  .skeleton {
+    @apply relative overflow-hidden bg-muted;
+  }
+  .skeleton::after {
+    @apply absolute inset-0 -translate-x-full;
+    content: "";
+    background-image: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0) 0,
+      rgba(255, 255, 255, 0.6) 20%,
+      rgba(255, 255, 255, 0.9) 60%,
+      rgba(255, 255, 255, 0)
+    );
+    animation: shimmer 1.6s infinite;
+  }
+}
+
+/* Respect users who prefer reduced motion. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Hide scrollbars on horizontal filter rails while keeping scroll. */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
