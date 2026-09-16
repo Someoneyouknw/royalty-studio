@@ -68,8 +68,8 @@ export function SettingsForm({ initial }: { initial: S }) {
             <Text label="Studio name" value={s.studio_name} onChange={(v) => set("studio_name", v)} error={field("studio_name")} />
             <Text label="Tagline" value={s.tagline} onChange={(v) => set("tagline", v)} />
             <div className="grid gap-6 sm:grid-cols-2">
-              <ImageUploadField label="Logo" bucket="branding" value={s.logo_url} onChange={(v) => set("logo_url", v)} aspect="aspect-[3/1]" />
-              <ImageUploadField label="Favicon" bucket="branding" value={s.favicon_url} onChange={(v) => set("favicon_url", v)} aspect="aspect-square max-w-[8rem]" />
+              <ImageUploadField label="Logo" bucket="branding" value={s.logo_url} onChange={(v) => set("logo_url", v)} aspect="aspect-[3/1]" error={field("logo_url")} />
+              <ImageUploadField label="Favicon" bucket="branding" value={s.favicon_url} onChange={(v) => set("favicon_url", v)} aspect="aspect-square max-w-[8rem]" error={field("favicon_url")} />
             </div>
           </Card>
         </TabsContent>
@@ -109,7 +109,7 @@ export function SettingsForm({ initial }: { initial: S }) {
         {/* Homepage */}
         <TabsContent value="homepage">
           <Card>
-            <ImageUploadField label="Hero background image (the big photo behind the headline)" bucket="branding" value={s.hero_image_url} onChange={(v) => set("hero_image_url", v)} />
+            <ImageUploadField label="Hero background image (the big photo behind the headline)" bucket="branding" value={s.hero_image_url} onChange={(v) => set("hero_image_url", v)} error={field("hero_image_url")} />
             <Text
               label="Hero title (big headline)"
               value={s.hero_title}
@@ -128,7 +128,7 @@ export function SettingsForm({ initial }: { initial: S }) {
               onChange={(v) => set("hero_labels", v)}
               placeholder="Weddings, Portraits, Editorial, Events"
             />
-            <ImageUploadField label="About image" bucket="branding" value={s.about_image_url} onChange={(v) => set("about_image_url", v)} aspect="aspect-[4/5] max-w-[16rem]" />
+            <ImageUploadField label="About image" bucket="branding" value={s.about_image_url} onChange={(v) => set("about_image_url", v)} aspect="aspect-[4/5] max-w-[16rem]" error={field("about_image_url")} />
             <Area label="About text" value={s.about_text} onChange={(v) => set("about_text", v)} rows={5} />
           </Card>
         </TabsContent>
@@ -138,7 +138,7 @@ export function SettingsForm({ initial }: { initial: S }) {
           <Card>
             <Text label="Default SEO title" value={s.seo_title} onChange={(v) => set("seo_title", v)} />
             <Area label="Default SEO description" value={s.seo_description} onChange={(v) => set("seo_description", v)} />
-            <ImageUploadField label="Social share image (Open Graph)" bucket="branding" value={s.og_image_url} onChange={(v) => set("og_image_url", v)} />
+            <ImageUploadField label="Social share image (Open Graph)" bucket="branding" value={s.og_image_url} onChange={(v) => set("og_image_url", v)} error={field("og_image_url")} />
           </Card>
         </TabsContent>
       </Tabs>
