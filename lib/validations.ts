@@ -182,10 +182,15 @@ export const messageCreateSchema = z.object({
 /* ------------------------------------------------------------------ */
 /* Settings                                                            */
 /* ------------------------------------------------------------------ */
+// Accepts a full URL (https://…), a site-relative path (/logo.png), or empty.
+// Relative paths are legitimate here because images uploaded to /public and the
+// built-in defaults are referenced by root-relative path, not absolute URL.
 const urlOrEmpty = z
   .string()
   .trim()
-  .url()
+  .refine((v) => v === "" || /^https?:\/\//.test(v) || v.startsWith("/"), {
+    message: "Enter a full web address (https://…) or a path starting with /",
+  })
   .optional()
   .or(z.literal("").transform(() => null))
   .nullable();
