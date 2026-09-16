@@ -17,12 +17,14 @@ export function ImageUploadField({
   bucket,
   label = "Image",
   aspect = "aspect-video",
+  error,
 }: {
   value: string | null;
   onChange: (url: string | null) => void;
   bucket: BucketName;
   label?: string;
   aspect?: string;
+  error?: string;
 }) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
@@ -98,6 +100,7 @@ export function ImageUploadField({
           e.target.value = "";
         }}
       />
+      {error && <p className="mt-1.5 text-xs text-destructive">{error}</p>}
     </div>
   );
 }
