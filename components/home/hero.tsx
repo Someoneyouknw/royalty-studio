@@ -72,12 +72,15 @@ export function Hero({ settings }: { settings: SiteSettings }) {
             transition={{ duration: 0.8, delay: 0.15 }}
             className="mega max-w-full text-[clamp(2.9rem,14vw,13rem)] [overflow-wrap:anywhere]"
           >
-            {words.map((w, i) => (
-              <span key={i} className="block">
-                {w}
-                {i === words.length - 1 && <span className="text-primary">.</span>}
-              </span>
-            ))}
+            {words.map((w, i) => {
+              const isLast = i === words.length - 1;
+              return (
+                <span key={i} className={isLast ? "block text-primary" : "block"}>
+                  {w}
+                  {isLast && <span className="text-primary">.</span>}
+                </span>
+              );
+            })}
           </motion.h1>
 
           <motion.div
